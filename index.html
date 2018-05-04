@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	    <title>To Do</title>
+
+	    <!-- Bootstrap -->
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container" style="width: 650px">
+			<h1>To Dos</h1>
+			<hr/>
+			<br/>
+			<div id="content">
+				<h4 id="task"></h4>
+				<hr/>
+				<form>
+					<div class="row">
+						<div class="col">
+							<input type="text" class="form-control">
+						</div>
+						<div class="col">
+							<button type="submit" class="btn btn-primary">Add Task</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- Bootstrap -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		
+		<!-- Web3 Library -->
+		<script src="js/web3.min.js"></script>
+
+		<script>
+			// Initialize Web3
+	      	if (typeof web3 !== 'undefined') {
+	        	web3 = new Web3(web3.currentProvider);
+	      	} else {
+	        	web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+	      	}
+
+	      	// Set Account
+      		web3.eth.defaultAccount = web3.eth.accounts[0];
+
+      		// Set Contract Abi
+      		var contractAbi = [
+				{
+					"constant": false,
+					"inputs": [
+						{
+							"name": "_title",
+							"type": "string"
+						}
+					],
+					"name": "setTask",
+					"outputs": [],
+					"payable": false,
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"inputs": [],
+					"payable": false,
+					"stateMutability": "nonpayable",
+					"type": "constructor"
+				},
+				{
+					"constant": true,
+					"inputs": [],
+					"name": "taskTitle",
+					"outputs": [
+						{
+							"name": "",
+							"type": "string"
+						}
+					],
+					"payable": false,
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]; 
+
+      		// Set Contract Address
+      		var contractAddress = '0xf7767b1aead8ffc5440878d009ce3a978288865e'; 
+
+      		// Set the Contract
+      		var contract = web3.eth.contract(contractAbi).at(contractAddress);
+
+			// Display Task
+			contract.taskTitle(function(err, task){
+				$('#task').html(task);
+			});
+
+			// Change the Candidate Name
+		    $('form').on('submit', function(event) {
+		        event.preventDefault();
+		        contract.setTask($('input').val());
+		    });
+		</script>
+	</body>
+</html>
