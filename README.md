@@ -4,6 +4,12 @@
 	- [Creating a local test environment for Ethereum Smart Contracts](https://medium.com/@adamh90/creating-a-local-test-environment-for-ethereum-smart-contracts-1f638efca020)
 	- [Build a Dapp in 20 Minutes, Dapp University](https://www.youtube.com/watch?v=KkZ6iYnSDRw)
 
+- Tools:
+	- Remix: smart contract IDE
+	- Web3 JS: enables client side app to talk to the blockchain 
+	- Metamask: enables browser to talk to the blockchain 
+	- Ganache: local development blockchain 
+
 ## Step 0: Create a local test environment for Ethereum Smart Contracts 
 - Set up MetaMask browser extension.
 - Install Ganache personal Ethereum blockchain. 
